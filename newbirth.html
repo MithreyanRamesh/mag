@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Rosey 🎂  | Celebrating You</title>
+    <meta name="description" content="A special birthday website with countdown timer, photo gallery, games, and memories">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff6b6b',
+                        secondary: '#4ecdc4',
+                        accent: '#45b7d1',
+                        dark: '#2c3e50',
+                        light: '#f8f9fa'
+                    },
+                    fontFamily: {
+                        'cursive': ['"Dancing Script"', 'cursive'],
+                        'heading': ['"Pacifico"', 'cursive'],
+                        'body': ['"Quicksand"', 'sans-serif']
+                    },
+                    animation: {
+                        'typewriter': 'typewriter 4s steps(40) 1s 1 normal both',
+                        'blink': 'blink 0.7s steps(2) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
+                    },
+                    keyframes: {
+                       typewriter: {
+                               'from': { width: '0' },
+                               'to': { width: '100%' }
+                        },
+                        blink: {
+                            'from, to': { borderColor: 'transparent' },
+                            '50%': { borderColor: '#ff6b6b' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0.7 }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 font-body">
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm shadow-lg">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h1 class="text-3xl font-heading text-primary">🎂 Happy Birthday Rosey Kutty 🦄</h1>
+                    <br>
+                    <p class="text-sm text-gray-600">Celebrating you in every way</p>
+                </div>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#countdown" onclick="scrollToSection('countdown'); return false;" class="px-4 py-2 rounded-full bg-primary text-white hover:bg-opacity-90 transition-all duration-300">Countdown</a>
+                    <a href="#gallery" onclick="scrollToSection('gallery'); return false;" class="px-4 py-2 rounded-full bg-secondary text-white hover:bg-opacity-90 transition-all duration-300">Gallery</a>
+                    <a href="#letter" onclick="scrollToSection('letter'); return false;" class="px-4 py-2 rounded-full bg-accent text-white hover:bg-opacity-90 transition-all duration-300">Love Letter</a>
+                    <a href="#music" onclick="scrollToSection('music'); return false;" class="px-4 py-2 rounded-full bg-purple-500 text-white hover:bg-opacity-90 transition-all duration-300">Music</a>
+                    <a href="#timeline" onclick="scrollToSection('timeline'); return false;" class="px-4 py-2 rounded-full bg-yellow-500 text-white hover:bg-opacity-90 transition-all duration-300">Timeline</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Countdown Timer with Confetti -->
+        <section id="countdown" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-heading text-primary mb-4">🎉 Birthday Countdown</h2>
+                <p class="text-gray-600">The celebration starts in...</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-primary bg-pink-100 rounded-xl py-6 mb-2 animate-pulse-glow" id="days">00</div>
+                        <div class="text-gray-600">Days</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-secondary bg-teal-100 rounded-xl py-6 mb-2 animate-pulse-glow" id="hours">00</div>
+                        <div class="text-gray-600">Hours</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-accent bg-blue-100 rounded-xl py-6 mb-2 animate-pulse-glow" id="minutes">00</div>
+                        <div class="text-gray-600">Minutes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-dark bg-gray-100 rounded-xl py-6 mb-2 animate-pulse-glow" id="seconds">00</div>
+                        <div class="text-gray-600">Seconds</div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="launchConfetti()" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-semibold hover:scale-105 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-birthday-cake mr-2"></i>Launch Confetti Now!
+                    </button>
+                    <p class="text-gray-500 text-sm mt-4">Click the button to start the celebration early!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery with Lightbox -->
+        <section id="gallery" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-heading text-primary mb-4">📸 Memory Gallery</h2>
+                <p class="text-gray-600">Beautiful moments captured in time</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                <div class="relative group cursor-pointer" onclick="openLightbox(1)">
+                    <img src="IMG_20250121_132423.jpg" alt="Birthday celebration with balloons" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(2)">
+                    <img src="Snapchat-805955853.jpg" alt="Cake cutting moment" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(3)">
+                    <img src="Snapchat-925962667.jpg" alt="Party decorations" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(4)">
+                    <img src="Snapchat-990861778.jpg" alt="Gifts and surprises" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(5)">
+                    <img src="Snapchat-1230175161.jpg" alt="Friends gathering" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(6)">
+                    <img src="Snapchat-1256840422.jpg" alt="Celebration toast" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(7)">
+                    <img src="Snapchat-1874659692.jpg" alt="Smiles and laughter" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(8)">
+                    <img src="Snapchat-626224319.jpg" alt="Special moments" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(9)">
+                    <img src="Snapchat-213768670.jpg" alt="Special moments" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                 <div class="relative group cursor-pointer" onclick="openLightbox(10)">
+                    <img src="Snapchat-132636748.jpg" alt="Special moments" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                 <div class="relative group cursor-pointer" onclick="openLightbox(11)">
+                    <img src="Snapchat-529946203.jpg" alt="Special moments" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer" onclick="openLightbox(12)">
+                    <img src="Snapchat-1732416891.jpg" alt="Special moments" class="w-full h-64 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center">
+            <div class="relative max-w-4xl max-h-[90vh]">
+                <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-white text-3xl hover:text-primary">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] rounded-lg">
+                <div class="text-white text-center mt-4" id="lightbox-caption"></div>
+            </div>
+        </div>
+
+        <!-- Animated Love Letter -->
+        <section id="letter" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-heading text-primary mb-4">💌 Special Message</h2>
+                <p class="text-gray-600">A heartfelt letter just for you</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-gradient-to-br from-white to-pink-50 rounded-2xl shadow-xl p-8 relative">
+                <div class="absolute -top-4 -left-4 w-20 h-20 bg-primary rounded-full flex items-center justify-center animate-float">
+                    <i class="fas fa-heart text-white text-3xl"></i>
+                </div>
+                
+                <div class="pl-8">
+                    <h3 class="text-2xl font-cursive text-primary mb-6">My Dearest, Rosey</h3>
+                    
+                    <div class="typewriter-container mb-6">
+                       <div id="typewriter-text"class="text-lg text-gray-700 leading-relaxed font-cursive overflow-auto border-r-4 border-primary" style="max-width: 627px;">
+                        You are my best gift of my life, whatever happens i never leave your hand neriya love you kutty ma na unna neriya miss pandran ana life la miss panna kudathunu eppovum aasa paduvan nee illama ennoda life oru stuck palce you are the reason to full fill my life and reason to be happy person nee enkitta kaatura love yaaru kudukala kutty ma once again I LOVE YOU and many more happy returns of the day
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mt-8">
+                        <div>
+                            <p class="font-cursive text-xl text-primary">With all my love,</p>
+                            <p class="text-gray-600">Your Mithu</p>
+                        </div>
+                        <button onclick="resetTypewriter()" class="px-6 py-2 bg-primary text-white rounded-full hover:bg-opacity-90 transition-all duration-300">
+                            <i class="fas fa-redo-alt mr-2"></i>Replay Animation
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Music Playlist -->
+        <section id="music" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-heading text-primary mb-4">🎵 Birthday Playlist</h2>
+                <p class="text-gray-600">Perfect songs for your celebration</p>
+               
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+                <div class="flex items-center mb-8">
+                    <div class="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mr-6">
+                        <i class="fas fa-music text-white text-3xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-dark">Party Playlist</h3>
+                        <p class="text-gray-600">8 songs • 28.8 minutes</p>
+                    </div>
+                </div>
+                
+                <div id="playlist" class="space-y-4">
+                    <!-- Songs will be populated here -->
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <button onclick="playPause()" id="play-btn" class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center hover:bg-opacity-90 transition-all duration-300">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="ml-4">
+                                <p id="current-song" class="font-semibold text-dark"> song playing</p>
+                                <p id="current-artist" class="text-sm text-gray-600">Select a song to play</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-600">Volume</p>
+                            <input type="range" min="0" max="100" value="80" oninput="changeVolume(this.value)" class="w-32">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Relationship Timeline -->
+        <section id="timeline" class="mb-16 scroll-mt-20">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-heading text-primary mb-4">📅 Our Journey</h2>
+                <p class="text-gray-600">Beautiful memories through time</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary to-secondary"></div>
+                    
+                    <div id="timeline-items" class="space-y-12">
+                        <!-- Timeline items will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h3 class="text-3xl font-heading mb-4">🎂 Happy Birthday chutumani 💜</h3>
+                <p class="text-gray-300 mb-6 max-w-2xl mx-auto">May your special day be filled with joy, laughter, and beautiful memories that last a lifetime.</p>
+                
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="#" onclick="launchConfetti(); return false;" class="w-12 h-12 bg-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-birthday-cake"></i>
+                    </a>
+                    <a href="#" onclick="scrollToSection('letter'); return false;" class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a href="#" onclick="scrollToSection('music'); return false;" class="w-12 h-12 bg-accent rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-music"></i>
+                    </a>
+                    <a href="#" onclick="scrollToSection('puzzle'); return false;" class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </a>
+                </div>
+                
+                <div class="border-t border-gray-700 pt-6">
+                    <p class="text-gray-400">Made with <i class="fas fa-heart text-primary"></i> for your special day darling</p>
+                    <p class="text-sm text-gray-500 mt-2">© 2026 Birthday Celebration. All memories preserved.</p>
+                </div>
+            </div>
+        </div>
+        <audio id="audioPlayer"></audio>
+
+    </footer>
+
+    <script>
+        // Data definitions
+        const galleryData = [
+            { "id": 1, "src": "IMG_20250121_132423.jpg", "alt": "Birthday celebration with balloons and confetti", "caption": "The moment of celebration begins!" },
+            { "id": 2, "src": "Snapchat-805955853.jpg", "alt": "Beautiful birthday cake with candles", "caption": "Make a wish as you blow out the candles!" },
+            { "id": 3, "src": "Snapchat-925962667.jpg", "alt": "Colorful party decorations and streamers", "caption": "Party atmosphere in full swing!" },
+            { "id": 4, "src": "Snapchat-990861778.jpg", "alt": "Surprise gifts wrapped beautifully", "caption": "Special surprises waiting for you!" },
+            { "id": 5, "src": "Snapchat-1230175161.jpg", "alt": "Friends gathered for celebration", "caption": "Surrounded by loved ones!" },
+            { "id": 6, "src": "Snapchat-1256840422.jpg", "alt": "Toast with sparkling drinks", "caption": "Cheers to another amazing year!" },
+            { "id": 7, "src": "Snapchat-1874659692.jpg", "alt": "Smiling faces and laughter", "caption": "Happiness captured in a moment!" },
+            { "id": 8, "src": "Snapchat-626224319.jpg", "alt": "Special birthday moments", "caption": "Memories to cherish forever!" },
+            { "id": 9, "src": "Snapchat-213768670.jpg", "alt": "Gerogeous birthday moments", "caption": "This love is forever!" },
+            { "id": 10,"src": "Snapchat-132636748.jpg", "alt": "Gerogeous birthday moments", "caption": "This love is forever!" },
+            { "id": 11,"src": "Snapchat-529946203.jpg", "alt": "Gerogeous birthday moments", "caption": "This love is forever!" },
+            { "id": 12,"src": "Snapchat-1732416891.jpg", "alt": "Gerogeous birthday moments", "caption": "This love is forever!" },
+        ];
+
+        const songsData = [
+        { 
+        id: 1, 
+        title: "Anbil Avan 🎂",
+        artist: "ARR",
+        audiosrc: "music/Anbil-Avan.mp3",
+        duration: "4:11", 
+        emoji: "🦄"
+    },
+    
+    { 
+        id: 2, 
+        title: "Karale Karalinte 🎂",
+        artist: "Vineeth Sreenivasan",
+        audiosrc: "music/Karale Karalinte (PenduJatt.Com.Se).mp3",
+        duration: "5:00", 
+        emoji: "💜"
+    },
+
+    { 
+        id: 3, 
+        title: "Kanmani-Anbodu 🎂",
+        artist: "Kamal hassan ",
+        audiosrc: "music/Kanmani-Anbodu.mp3",
+        duration: "5:18", 
+        emoji: "🤗"
+    },
+   
+    { 
+        id: 4, 
+        title: "Malare 🎂",
+        artist: "vidyasagar",
+        audiosrc: "music/Malare.mp3",
+        duration: "5:05", 
+        emoji: "🐷"
+    },
+    
+     { 
+        id: 5, 
+        title: "Malare-Ninne 🎂",
+        artist: "vijay yesudas ",
+        audiosrc: "music/Malare-Ninne.mp3",
+        duration: "5:15", 
+        emoji: "💏"
+    },
+
+    
+     { 
+        id: 6, 
+        title: "Yen-Endral 🎂",
+        artist: "siddarth vippin ",
+        audiosrc: "music/Yen-Endral.mp3",
+        duration: "4:31", 
+        emoji: "👰"
+    },
+];
+
+
+        const timelineData = [
+            { "id": 1, "date": "2022", "title": "First Meeting", "description": "The day our paths first crossed and this beautiful journey began.", "icon": "👋", "side": "left" },
+            { "id": 2, "date": "2023", "title": "First Birthday Together", "description": "Celebrated your special day together for the first time!", "icon": "🎂", "side": "right" },
+            { "id": 4, "date": "2023", "title": "our First Anniversary ", "description": "It was one my best day we sit and eat together with more fun .", "icon": "💍", "side": "right" },
+            { "id": 3, "date": "2024", "title": "Special Vacation", "description": "That amazing trip where we created unforgettable memories.with more kisses", "icon": "✈️", "side": "left" },
+            { "id": 5, "date": "Today", "title": "This Birthday", "description": "Another year of wonderful memories but iam not with you to celebrate your birthay", "icon": "😞", "side": "left" },
+            { "id": 6, "date": "Future", "title": "Many More to Come", "description": "we get married and we both celebrate oru birthady with our babies", "icon": "💜", "side": "right" }
+        ];
+
+        
+
+        // State variables
+        let currentSong = null;
+        let isPlaying = false;
+        let draggedPiece = null;
+        let placedPieces = Array(9).fill(null);
+        let puzzleCompleted = false;
+
+        // DOM Ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCountdown();
+            initializePlaylist();
+            initializeTimeline();
+            initializePuzzle();
+        });
+
+        // Navigation
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Countdown Timer
+        function initializeCountdown() {
+            // Set birthday to tomorrow for demo
+            const now = new Date("2026-02-12T00:00:00");
+            const birthday = new Date(now);
+            birthday.setDate(now.getDate() + 1);
+            birthday.setHours(0, 0, 0, 0);
+
+            function updateCountdown() {
+                const now = new Date();
+                const diff = birthday - now;
+
+                if (diff <= 0) {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    launchConfetti();
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Confetti
+        function launchConfetti() {
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffd166', '#ff9a76']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffd166', '#ff9a76']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            // Additional center burst
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Lightbox
+        function openLightbox(index) {
+            const item = galleryData[index - 1];
+            document.getElementById('lightbox-img').src = item.src;
+            document.getElementById('lightbox-img').alt = item.alt;
+            document.getElementById('lightbox-caption').textContent = item.caption;
+            document.getElementById('lightbox').classList.remove('hidden');
+            document.getElementById('lightbox').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+            document.getElementById('lightbox').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Typewriter effect
+
+        // 💌 Romantic Typewriter Effect
+const letterText = `You are my best gift of my life, whatever happens i never leave your hand neriya love you kutty ma na unna neriya miss pandran ana life la miss panna kudathunu eppovum aasa paduvan nee illama ennoda life oru stuck palce you are the reason to full fill my life and reason to be happy person nee enkitta kaatura love yaaru kudukala kutty ma once again I LOVE YOU and many more happy returns of the day`;
+
+let typingInterval;
+
+function startTyping() {
+    const typewriter = document.getElementById("typewriter-text");
+    typewriter.innerHTML = "";
+    let index = 0;
+
+    clearInterval(typingInterval);
+
+    typingInterval = setInterval(() => {
+        if (index < letterText.length) {
+            typewriter.innerHTML += letterText.charAt(index);
+            index++;
+
+            // Auto scroll down
+            typewriter.scrollTop = typewriter.scrollHeight;
+        } else {
+            clearInterval(typingInterval);
+        }
+    }, 30); // typing speed (lower = faster)
+}
+
+// Replay button
+function resetTypewriter() {
+    startTyping();
+}
+
+// Start automatically when page loads
+document.addEventListener("DOMContentLoaded", function () {
+    startTyping();
+});
+
+        // Music Playlist
+        function initializePlaylist() {
+            const playlist = document.getElementById('playlist');
+            songsData.forEach(song => {
+                const songElement = document.createElement('div');
+                songElement.className = 'flex items-center p-4 rounded-lg hover:bg-gray-50 cursor-pointer transition-all duration-300';
+                songElement.onclick = () => playSong(song.id);
+                songElement.innerHTML = `
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg flex items-center justify-center mr-4">
+                        <span class="text-xl">${song.emoji}</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="font-semibold text-dark">${song.title}</h4>
+                        <p class="text-sm text-gray-600">${song.artist}</p>
+                    </div>
+                    <div class="text-gray-500">${song.duration}</div>
+                    <div class="ml-4 w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center">
+                        <i class="fas fa-play text-gray-400"></i>
+                    </div>
+                `;
+                playlist.appendChild(songElement);
+            });
+        }
+
+       const audioPlayer = document.getElementById("audioPlayer");
+
+function playSong(songId) {
+    const song = songsData.find(s => s.id === songId);
+    if (!song) return;
+
+    // If same song clicked → toggle play/pause
+    if (currentSong === songId) {
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            document.getElementById('play-btn').innerHTML = '<i class="fas fa-pause"></i>';
+            isPlaying = true;
+        } else {
+            audioPlayer.pause();
+            document.getElementById('play-btn').innerHTML = '<i class="fas fa-play"></i>';
+            isPlaying = false;
+        }
+        return;
+    }
+
+    // If new song selected
+    currentSong = songId;
+    audioPlayer.src = song.audiosrc;
+    audioPlayer.play();
+
+    document.getElementById('current-song').textContent = song.title;
+    document.getElementById('current-artist').textContent = song.artist;
+
+    document.getElementById('play-btn').innerHTML = '<i class="fas fa-pause"></i>';
+    isPlaying = true;
+}
+
+            // Update all play buttons
+            document.querySelectorAll('#playlist > div').forEach((div, index) => {
+                const playIcon = div.querySelector('.fa-play');
+                const container = div.querySelector('.w-8.h-8');
+                if (index === songId - 1) {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                    container.classList.remove('border-gray-300');
+                    container.classList.add('border-primary', 'bg-primary');
+                    playIcon.classList.remove('text-gray-400');
+                    playIcon.classList.add('text-white');
+                } else {
+                    playIcon.classList.remove('fa-pause');
+                    playIcon.classList.add('fa-play');
+                    container.classList.remove('border-primary', 'bg-primary');
+                    container.classList.add('border-gray-300');
+                    playIcon.classList.remove('text-white');
+                    playIcon.classList.add('text-gray-400');
+                }
+            });
+
+            isPlaying = true;
+            document.getElementById('play-btn').innerHTML = '<i class="fas fa-pause"></i>';
+        
+
+    function playPause() {
+    if (!currentSong) {
+        playSong(1);
+        return;
+    }
+
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        document.getElementById('play-btn').innerHTML = '<i class="fas fa-pause"></i>';
+        isPlaying = true;
+    } else {
+        audioPlayer.pause();
+        document.getElementById('play-btn').innerHTML = '<i class="fas fa-play"></i>';
+        isPlaying = false;
+    }
+}
+
+
+
+      function changeVolume(value) {
+    audioPlayer.volume = value / 100;
+}
+
+
+        // Timeline
+        function initializeTimeline() {
+            const timeline = document.getElementById('timeline-items');
+            timelineData.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = `relative ${item.side === 'left' ? 'text-left pr-12' : 'text-left pl-12'}`;
+                
+                if (item.side === 'left') {
+                    itemElement.innerHTML = `
+                        <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-primary">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-lg">${item.icon}</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark text-lg">${item.title}</h4>
+                                    <p class="text-gray-500">${item.date}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">${item.description}</p>
+                        </div>
+                        <div class="absolute top-6 ${item.side === 'left' ? 'right-0' : 'left-0'} transform ${item.side === 'left' ? 'translate-x-1/2' : '-translate-x-1/2'} w-6 h-6 bg-primary rounded-full border-4 border-white"></div>
+                    `;
+                } else {
+                    itemElement.innerHTML = `
+                        <div class="absolute top-6 ${item.side === 'left' ? 'right-0' : 'left-0'} transform ${item.side === 'left' ? 'translate-x-1/2' : '-translate-x-1/2'} w-6 h-6 bg-primary rounded-full border-4 border-white"></div>
+                        <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-secondary">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-secondary text-white rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-lg">${item.icon}</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark text-lg">${item.title}</h4>
+                                    <p class="text-gray-500">${item.date}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">${item.description}</p>
+                        </div>
+                    `;
+                }
+                
+                timeline.appendChild(itemElement);
+            });
+        }
+        // Close lightbox on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+        
+    </script>
+</body>
+</html>
